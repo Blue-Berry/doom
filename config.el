@@ -74,3 +74,14 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Ocaml config
+(remove-hook 'tuareg-mode-local-vars-hook #'opam-switch-mode)
+;; Ocaml eglot config
+(use-package ocaml-eglot
+  :ensure t
+  :after tuareg
+  :hook
+  (tuareg-mode . ocaml-eglot)
+  (ocaml-eglot . eglot-ensure)
+  (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))

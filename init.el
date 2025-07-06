@@ -21,7 +21,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
+       ;;company           ; the ultimate code completion backend
        (corfu +orderless)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
@@ -78,7 +78,7 @@
        :term
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
-       ;;term              ; basic terminal emulator for Emacs
+       term              ; basic terminal emulator for Emacs
        vterm             ; the best terminal emulation in Emacs
 
        :checkers
@@ -105,7 +105,7 @@
        ;;pdf               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       ;;tree-sitter       ; syntax and parsing, sitting in a tree...
+       tree-sitter       ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
