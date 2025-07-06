@@ -85,3 +85,23 @@
   (tuareg-mode . ocaml-eglot)
   (ocaml-eglot . eglot-ensure)
   (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
+
+
+
+(use-package evil-owl
+  :diminish ""
+  :config
+  (setq evil-owl-idle-delay 0.1)
+  (setq evil-owl-max-string-length 500)
+  (add-to-list 'display-buffer-alist
+               '("*evil-owl*"
+                 (display-buffer-in-side-window)
+                 (side . bottom)
+                 (window-height . 20)))
+  (evil-owl-mode))
+
+(add-to-list 'display-buffer-alist
+             '("*evil-owl*"
+               (display-buffer-in-side-window)
+               (side . bottom)
+               (window-height . 20)))

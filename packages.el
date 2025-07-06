@@ -49,3 +49,5 @@
 ;; (unpin! t)
 
 (package! ocaml-eglot)
+
+(package! evil-owl)
