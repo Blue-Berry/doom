@@ -86,12 +86,25 @@
   (ocaml-eglot . eglot-ensure)
   (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
 
+;; Configure OCaml LSP server settings
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '(tuareg-mode . ("ocamllsp")))
+  (setq-default eglot-workspace-configuration
+                '((ocamllsp . ((codelens . ((enable . t)))
+                               (inlayHints . ((hintPatternVariables . t)
+                                              (hintLetBindings . t)
+                                              (hintFunctionParams . t)))
+                               (extendedHover . ((enable . t)))
+                               (syntaxDocumentation . ((enable . t)))
+                               (merlinJumpCodeActions . ((enable . t))))))))
+
 
 ;; Display the registers on '"' and other similar commands
 (use-package evil-owl
   :diminish ""
   :config
-  (setq evil-owl-idle-delay 0.1)
+  (setq evil-owl-idle-delay 0.3)
   (setq evil-owl-max-string-length 500)
   (add-to-list 'display-buffer-alist
                '("*evil-owl*"
@@ -99,5 +112,3 @@
                  (side . bottom)
                  (window-height . 20)))
   (evil-owl-mode))
-
-;; (setq! lsp-enabled-clients '(ocamllsp nil nixd-lsp rnix-lsp))
