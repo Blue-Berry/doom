@@ -87,7 +87,7 @@
   (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
 
 
-
+;; Display the registers on '"' and other similar commands
 (use-package evil-owl
   :diminish ""
   :config
@@ -100,8 +100,4 @@
                  (window-height . 20)))
   (evil-owl-mode))
 
-(add-to-list 'display-buffer-alist
-             '("*evil-owl*"
-               (display-buffer-in-side-window)
-               (side . bottom)
-               (window-height . 20)))
+;; (setq! lsp-enabled-clients '(ocamllsp nil nixd-lsp rnix-lsp))
