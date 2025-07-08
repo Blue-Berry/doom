@@ -101,7 +101,7 @@
        (lsp +lsp +peek)               ; M-x vscode
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
-       ;;pass              ; password manager for nerds TODO: enable this
+       (pass +auth)              ; password manager for nerds TODO: enable this
        pdf               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
