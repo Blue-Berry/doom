@@ -91,13 +91,8 @@
   (add-to-list 'eglot-server-programs
                '(tuareg-mode . ("ocamllsp")))
   (setq-default eglot-workspace-configuration
-                '((ocamllsp . ((codelens . ((enable . t)))
-                               (inlayHints . ((hintPatternVariables . t)
-                                              (hintLetBindings . t)
-                                              (hintFunctionParams . t)))
-                               (extendedHover . ((enable . t)))
-                               (syntaxDocumentation . ((enable . t)))
-                               (merlinJumpCodeActions . ((enable . t))))))))
+                '(:ocamllsp (:codelens t :inlayHints (:hintPatternVariables t :hintLetBindings t :hintFunctionParams t)))
+                ))
 
 
 ;; Display the registers on '"' and other similar commands
@@ -112,3 +107,6 @@
                  (side . bottom)
                  (window-height . 20)))
   (evil-owl-mode))
+
+
+(global-prettify-symbols-mode)
