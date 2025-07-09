@@ -125,6 +125,14 @@ Set which-key delay
 (setq which-key-idle-secondary-delay 0.1)
 #+end_src
 ** Org
+*** Appearance
+org modern mode hides some things and prettifies org mode.
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (global-org-modern-mode))
+
+(setq org-hide-emphasis-markers t)  ;; hides *bold* / /italic/ markers
+#+end_src
 *** Location
 If you use ~org~ and don't want your org files in the default location below,
 change ~org-directory~. It must be set before org loads!
@@ -184,3 +192,10 @@ Uses pass to get api-key
                    :stream t :key (password-store-get "claude-api-key")))
   )
 #+end_src
+
+
+* Explore
+** Packages
+- https://github.com/bling/fzf.el
+- https://github.com/jschaf/esup?tab=readme-ov-file
+- https://github.com/jtmoulia/elisp-koans
