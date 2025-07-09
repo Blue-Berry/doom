@@ -126,3 +126,6 @@
 (use-package! pinentry
   :init (setq epg-pinentry-mode `loopback)
   (pinentry-start))
+
+(setq which-key-idle-delay 0.2)
+(setq which-key-idle-secondary-delay 0.1)
