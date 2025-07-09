@@ -1,5 +1,6 @@
 #+title: Config
 #+created:  July 9, 2025
+#+STARTUP: content
 
 * Set lexical-binding
 I have no idea what this does
