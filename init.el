@@ -191,5 +191,5 @@
        ;;(rss +org)        ; emacs as an RSS reader TODO: Include
 
        :config
-       ;;literate TODO: add this
+       literate
        (default +bindings +smartparens))
