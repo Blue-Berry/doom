@@ -45,14 +45,3 @@
   (setq-default eglot-workspace-configuration
                 '(:ocamllsp (:codelens t :inlayHints (:hintPatternVariables t :hintLetBindings t :hintFunctionParams t)))
                 ))
-
-(after! gptel
-  (gptel-make-anthropic "Claude"          ;Any name you want
-    :stream t                             ;Streaming responses
-    :key (password-store-get "claude-api-key"))
-  (setq
-   ;; gptel-model 'claude-3-sonnet-20240229 ;  "claude-3-opus-20240229" also available
-   gptel-model 'claude-sonnet-4-20250514
-   gptel-backend (gptel-make-anthropic "Claude"
-                   :stream t :key (password-store-get "claude-api-key")))
-  )

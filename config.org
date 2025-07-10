@@ -170,22 +170,6 @@ Configure ~Ocamllsp~ settings.
                 ))
 #+end_src
 
-** LLM
-*** Gptel
-Uses pass to get api-key
-#+begin_src emacs-lisp
-(after! gptel
-  (gptel-make-anthropic "Claude"          ;Any name you want
-    :stream t                             ;Streaming responses
-    :key (password-store-get "claude-api-key"))
-  (setq
-   ;; gptel-model 'claude-3-sonnet-20240229 ;  "claude-3-opus-20240229" also available
-   gptel-model 'claude-sonnet-4-20250514
-   gptel-backend (gptel-make-anthropic "Claude"
-                   :stream t :key (password-store-get "claude-api-key")))
-  )
-#+end_src
-
 
 * Explore
 ** Packages
