@@ -51,3 +51,4 @@
 (package! ocaml-eglot)
 (package! evil-owl)
 (package! pinentry)
+(package! rainbow-delimiters)
