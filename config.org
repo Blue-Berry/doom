@@ -170,6 +170,11 @@ Configure ~Ocamllsp~ settings.
                 ))
 #+end_src
 
+** Key Bindings
+*** Dired
+#+begin_src emacs-lisp :tangle yes
+(map! :n "-" 'dired-jump)
+#+end_src
 
 * Explore
 ** Packages
