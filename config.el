@@ -46,10 +46,6 @@
                 '(:ocamllsp (:codelens t :inlayHints (:hintPatternVariables t :hintLetBindings t :hintFunctionParams t)))
                 ))
 
-(use-package! pinentry
-  :init (setq epg-pinentry-mode `loopback)
-  (pinentry-start))
-
 (after! gptel
   (gptel-make-anthropic "Claude"          ;Any name you want
     :stream t                             ;Streaming responses

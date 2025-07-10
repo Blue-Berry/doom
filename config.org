@@ -170,14 +170,6 @@ Configure ~Ocamllsp~ settings.
                 ))
 #+end_src
 
-** Pinentry
-Allow for gpg to use Emacs for pinentry.
-#+begin_src emacs-lisp
-(use-package! pinentry
-  :init (setq epg-pinentry-mode `loopback)
-  (pinentry-start))
-#+end_src
-
 ** LLM
 *** Gptel
 Uses pass to get api-key
