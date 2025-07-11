@@ -174,8 +174,18 @@ Configure ~Ocamllsp~ settings.
 *** Dirvish
 #+begin_src emacs-lisp :tangle yes
 (map! :n "-" 'dirvish)
+(map! :n :leader "-" 'dirvish-quick-access)
 #+end_src
 
+** Quick access entries
+#+begin_src emacs-lisp :tangle yes
+(after! dirvish
+  (setq! dirvish-quick-access-entries
+         `(("h" "~/"                   "Home")
+           ("e" ,user-emacs-directory  "Emacs user directory")
+           ("p" "~/playground/"        "playground")
+           ("w" "~/work/"              "Work"))))
+#+end_src
 * Explore
 ** Packages
 - https://github.com/bling/fzf.el

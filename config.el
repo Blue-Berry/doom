@@ -47,3 +47,11 @@
                 ))
 
 (map! :n "-" 'dirvish)
+(map! :n :leader "-" 'dirvish-quick-access)
+
+(after! dirvish
+  (setq! dirvish-quick-access-entries
+         `(("h" "~/"                   "Home")
+           ("e" ,user-emacs-directory  "Emacs user directory")
+           ("p" "~/playground/"        "playground")
+           ("w" "~/work/"              "Work"))))
