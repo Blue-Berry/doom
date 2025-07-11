@@ -171,9 +171,9 @@ Configure ~Ocamllsp~ settings.
 #+end_src
 
 ** Key Bindings
-*** Dired
+*** Dirvish
 #+begin_src emacs-lisp :tangle yes
-(map! :n "-" 'dired-jump)
+(map! :n "-" 'dirvish)
 #+end_src
 
 * Explore

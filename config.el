@@ -46,4 +46,4 @@
                 '(:ocamllsp (:codelens t :inlayHints (:hintPatternVariables t :hintLetBindings t :hintFunctionParams t)))
                 ))
 
-(map! :n "-" 'dired-jump)
+(map! :n "-" 'dirvish)
