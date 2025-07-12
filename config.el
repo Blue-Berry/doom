@@ -75,6 +75,7 @@
               'nixd-lsp)
       (setq-local lsp-inlay-hint-enable t)
       (lsp-inlay-hints-mode 1)))
+
   (add-hook 'lsp-after-initialize-hook #'my/enable-nixd-inlay-hints))
 
 (after! dirvish
