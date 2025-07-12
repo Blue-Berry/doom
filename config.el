@@ -46,8 +46,36 @@
                 '(:ocamllsp (:codelens t :inlayHints (:hintPatternVariables t :hintLetBindings t :hintFunctionParams t)))
                 ))
 
-(map! :n "-" 'dirvish)
-(map! :n :leader "-" 'dirvish-quick-access)
+;; nil-ls
+(after! lsp-mode
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "nil")
+                    :activation-fn (lsp-activate-on "nix")
+                    :priority 1
+                    :multi-root t
+                    :server-id 'nil-ls))
+
+  ;; nixd
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "nixd")
+                    :activation-fn (lsp-activate-on "nix")
+                    :priority 0
+                    :multi-root t
+                    :add-on? t
+                    :server-id 'nixd-lsp)))
+
+(add-hook 'nix-mode-hook
+  (lambda ()
+    ;; Allow manually registered LSP clients to load
+    (setq-local lsp-client-packages nil)))
+
+(after! lsp-mode
+  (defun my/enable-nixd-inlay-hints ()
+    (when (eq (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace))
+              'nixd-lsp)
+      (setq-local lsp-inlay-hint-enable t)
+      (lsp-inlay-hints-mode 1)))
+  (add-hook 'lsp-after-initialize-hook #'my/enable-nixd-inlay-hints))
 
 (after! dirvish
   (setq! dirvish-quick-access-entries

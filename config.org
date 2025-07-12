@@ -170,9 +170,51 @@ Configure ~Ocamllsp~ settings.
                 ))
 #+end_src
 
+*** Nix
+**** Lsps
+Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowed for running in parallel to nil.
+#+begin_src emacs-lisp :tangle yes
+  ;; nil-ls
+(after! lsp-mode
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "nil")
+                    :activation-fn (lsp-activate-on "nix")
+                    :priority 1
+                    :multi-root t
+                    :server-id 'nil-ls))
+
+  ;; nixd
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "nixd")
+                    :activation-fn (lsp-activate-on "nix")
+                    :priority 0
+                    :multi-root t
+                    :add-on? t
+                    :server-id 'nixd-lsp)))
+
+#+end_src
+******* Enable allow nixd + nil
+nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to nil so that all lsps are allowed.
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'nix-mode-hook
+  (lambda ()
+    ;; Allow manually registered LSP clients to load
+    (setq-local lsp-client-packages nil)))
+#+end_src
+**** Enable inlay hints
+#+begin_src emacs-lisp :tangle yes
+(after! lsp-mode
+  (defun my/enable-nixd-inlay-hints ()
+    (when (eq (lsp--client-server-id (lsp--workspace-client lsp--cur-workspace))
+              'nixd-lsp)
+      (setq-local lsp-inlay-hint-enable t)
+      (lsp-inlay-hints-mode 1)))
+  (add-hook 'lsp-after-initialize-hook #'my/enable-nixd-inlay-hints))
+#+end_src
 ** Key Bindings
 *** Dirvish
-#+begin_src emacs-lisp :tangle yes
+- [ ] TODO Tangle this:
+#+begin_src emacs-lisp :tangle no
 (map! :n "-" 'dirvish)
 (map! :n :leader "-" 'dirvish-quick-access)
 #+end_src
