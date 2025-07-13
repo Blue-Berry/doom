@@ -57,6 +57,10 @@ they are implemented.
 
 
 * Configurations
+** Native compilation
+#+begin_src emacs-lisp :tangle yes
+(setq package-native-compile t)
+#+end_src
 ** Appearance
 *** Themes
 There are two ways to load a theme. Both assume the theme is installed and
@@ -173,6 +177,7 @@ Configure ~Ocamllsp~ settings.
 *** Nix
 **** Lsps
 Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowed for running in parallel to nil.
+TODO ~nil~ keeps crashing, maybe it's a cpabilities issue, will need to debug
 #+begin_src emacs-lisp :tangle yes
   ;; nil-ls
 (after! lsp-mode
