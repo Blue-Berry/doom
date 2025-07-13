@@ -177,7 +177,7 @@ Configure ~Ocamllsp~ settings.
 *** Nix
 **** Lsps
 Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowed for running in parallel to nil.
-TODO ~nil~ keeps crashing, maybe it's a cpabilities issue, will need to debug
+- [X] TODO ~nil~ keeps crashing, maybe it's a capabilities issue, will need to debug
 #+begin_src emacs-lisp :tangle yes
   ;; nil-ls
 (after! lsp-mode
@@ -186,7 +186,8 @@ TODO ~nil~ keeps crashing, maybe it's a cpabilities issue, will need to debug
                     :activation-fn (lsp-activate-on "nix")
                     :priority 1
                     :multi-root t
-                    :server-id 'nil-ls))
+                    :server-id 'nil-ls
+                    :notification-handlers (ht ("textDocument/didSave" 'ignore)))) ;didSave was crashing nil so it is ignored
 
   ;; nixd
   (lsp-register-client

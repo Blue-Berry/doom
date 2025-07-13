@@ -55,7 +55,8 @@
                     :activation-fn (lsp-activate-on "nix")
                     :priority 1
                     :multi-root t
-                    :server-id 'nil-ls))
+                    :server-id 'nil-ls
+                    :notification-handlers (ht ("textDocument/didSave" 'ignore)))) ;didSave was crashing nil so it is ignored
 
   ;; nixd
   (lsp-register-client
