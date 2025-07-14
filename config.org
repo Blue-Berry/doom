@@ -136,7 +136,9 @@ org modern mode hides some things and prettifies org mode.
 (after! org
   (global-org-modern-mode))
 
-(setq org-hide-emphasis-markers t)  ;; hides *bold* / /italic/ markers
+(setq!
+ org-hide-emphasis-markers t
+ org-modern-star 'replace)  ;; hides *bold* / /italic/ markers
 #+end_src
 *** Location
 If you use ~org~ and don't want your org files in the default location below,
