@@ -179,7 +179,6 @@ Configure ~Ocamllsp~ settings.
 Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowed for running in parallel to nil.
 - [X] TODO ~nil~ keeps crashing, maybe it's a capabilities issue, will need to debug
 #+begin_src emacs-lisp :tangle yes
-  ;; nil-ls
 (after! lsp-mode
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "nil")
@@ -187,9 +186,8 @@ Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowe
                     :priority 1
                     :multi-root t
                     :server-id 'nil-ls
-                    :notification-handlers (ht ("textDocument/didSave" 'ignore)))) ;didSave was crashing nil so it is ignored
+                    :synchronize-sections nil)) ; Disable sync sections
 
-  ;; nixd
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "nixd")
                     :activation-fn (lsp-activate-on "nix")
@@ -221,9 +219,9 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 ** Key Bindings
 *** Dirvish
 - [ ] TODO Tangle this:
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
 (map! :n "-" 'dirvish)
-(map! :n :leader "-" 'dirvish-quick-access)
+(map! :leader :n "-" 'dirvish-quick-access)
 #+end_src
 
 ** Quick access entries
