@@ -233,6 +233,11 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
            ("p" "~/playground/"        "playground")
            ("w" "~/work/"              "Work"))))
 #+end_src
+** Spelling
+*** Set Dictionary
+#+begin_src emacs-lisp :tangle yes
+(setq ispell-dictionary "en_GB")
+#+end_src
 * Explore
 ** Packages
 - https://github.com/bling/fzf.el
