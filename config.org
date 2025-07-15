@@ -57,10 +57,6 @@ they are implemented.
 
 
 * Configurations
-** Native compilation
-#+begin_src emacs-lisp :tangle yes
-(setq package-native-compile t)
-#+end_src
 ** Appearance
 *** Themes
 There are two ways to load a theme. Both assume the theme is installed and
@@ -128,6 +124,10 @@ Set which-key delay
 #+begin_src emacs-lisp
 (setq which-key-idle-delay 0.2)
 (setq which-key-idle-secondary-delay 0.1)
+#+end_src
+*** Transparency
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'default-frame-alist '(alpha-background . 95))
 #+end_src
 ** Org
 *** Appearance
