@@ -158,7 +158,6 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 Enable the ~ocaml-eglot~ package.
 #+begin_src emacs-lisp
 (use-package ocaml-eglot
-  :ensure t
   :after tuareg
   :hook
   (tuareg-mode . ocaml-eglot)
