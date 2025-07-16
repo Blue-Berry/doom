@@ -126,6 +126,7 @@ Set which-key delay
 (setq which-key-idle-secondary-delay 0.1)
 #+end_src
 *** Transparency
+TODO: Only seems to work on meacs not emacsclient for some reason.
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist '(alpha-background . 95))
 #+end_src
