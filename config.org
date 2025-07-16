@@ -130,6 +130,10 @@ TODO: Only seems to work on meacs not emacsclient for some reason.
 #+begin_src emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist '(alpha-background . 95))
 #+end_src
+This is to set everything else to slightly transparent too.
+#+begin_src emacs-lisp :tangle no
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+#+end_src
 ** Org
 *** Appearance
 org modern mode hides some things and prettifies org mode.
