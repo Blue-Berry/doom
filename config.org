@@ -133,6 +133,10 @@ This is to set everything else to slightly transparent too (I think).
 #+begin_src emacs-lisp :tangle no
 (add-to-list 'default-frame-alist '(alpha . (95 . 95)))
 #+end_src
+*** To Do highlighting
+#+begin_src emacs-lisp :tangle yes
+(global-hl-todo-mode 1)
+#+end_src
 ** Org
 *** Appearance
 org modern mode hides some things and prettifies org mode.
@@ -182,8 +186,8 @@ Configure ~Ocamllsp~ settings.
 *** Nix
 **** Lsps
 Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowed for running in parallel to nil.
-- [X] TODO ~nil~ keeps crashing, maybe it's a capabilities issue, will need to debug
-#+begin_src emacs-lisp :tangle yes
+TODO: This lsp setup for nix is breaking everything
+#+begin_src emacs-lisp :tangle no
 (after! lsp-mode
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection "nil")
@@ -204,7 +208,7 @@ Enable both ~nil~ and ~nixd~ language servers. For nixd adding ~:add-on?~ allowe
 #+end_src
 ******* Enable allow nixd + nil
 nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to nil so that all lsps are allowed.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (add-hook 'nix-mode-hook
   (lambda ()
     ;; Allow manually registered LSP clients to load
