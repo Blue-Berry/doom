@@ -226,6 +226,12 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
   (add-hook 'lsp-after-initialize-hook #'my/enable-nixd-inlay-hints))
 #+end_src
 ** Key Bindings
+*** Evil escape
+#+begin_src emacs-lisp :tangle yes
+(after! evil
+  (setq evil-escape-key-sequence "jk")
+  (setq evil-escape-delay 0.1))
+#+end_src
 *** Dirvish
 - [ ] TODO Tangle this:
 #+begin_src emacs-lisp :tangle yes
@@ -248,6 +254,9 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 (setq ispell-dictionary "en_GB")
 #+end_src
 * Explore
+** Theft
+ * https://www.youtube.com/watch?v=cLa96bUPR_I
+ * [[https://joshblais.com/posts/my-literate-doom-emacs-config/][My Literate Doom Emacs Configuration ·]]
 ** Packages
 - https://github.com/bling/fzf.el
 - https://github.com/jschaf/esup?tab=readme-ov-file
