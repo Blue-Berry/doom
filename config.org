@@ -233,20 +233,19 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
   (setq evil-escape-delay 0.1))
 #+end_src
 *** Dirvish
-- [ ] TODO Tangle this:
 #+begin_src emacs-lisp :tangle yes
 (map! :n "-" 'dirvish)
 (map! :leader :n "-" 'dirvish-quick-access)
 #+end_src
-
-** Quick access entries
+**** Quick access entries
 #+begin_src emacs-lisp :tangle yes
 (after! dirvish
   (setq! dirvish-quick-access-entries
          `(("h" "~/"                   "Home")
            ("e" ,user-emacs-directory  "Emacs user directory")
            ("p" "~/playground/"        "playground")
-           ("w" "~/work/"              "Work"))))
+           ("w" "~/work/"              "Work")
+           ("n" "~/nixos-config/"      "NixOs"))))
 #+end_src
 ** Spelling
 *** Set Dictionary
@@ -254,7 +253,7 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 (setq ispell-dictionary "en_GB")
 #+end_src
 * Explore
-** Theft
+** Larceny
  * https://www.youtube.com/watch?v=cLa96bUPR_I
  * [[https://joshblais.com/posts/my-literate-doom-emacs-config/][My Literate Doom Emacs Configuration ·]]
 ** Packages
