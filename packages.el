@@ -52,3 +52,6 @@
 (package! evil-owl)
 (package! pinentry)
 (package! rainbow-delimiters)
+(package! alloc-scan
+  :recipe (:host github :repo "Blue-Berry/alloc_scan.el"
+           :files ("alloc-scan.el")))
