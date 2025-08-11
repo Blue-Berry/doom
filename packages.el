@@ -55,3 +55,8 @@
 (package! alloc-scan
   :recipe (:host github :repo "Blue-Berry/alloc_scan.el"
            :files ("alloc-scan.el")))
+
+(package! janet-ts-mode
+  :recipe (:host github :repo "sogaiu/janet-ts-mode"))
+(package! flycheck-janet
+  :recipe (:host github :repo "sogaiu/flycheck-janet"))
