@@ -240,8 +240,10 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
   (treesit-install-language-grammar 'janet-simple))
 #+end_src
 *** Go
+**** TODO verify the inlay hints
 **** TODO Fix go lsp
 You need to run ~lsp~ to start the server.
+
 ** Key Bindings
 *** Evil escape
 #+begin_src emacs-lisp :tangle yes
