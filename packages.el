@@ -60,3 +60,6 @@
   :recipe (:host github :repo "sogaiu/janet-ts-mode"))
 (package! flycheck-janet
   :recipe (:host github :repo "sogaiu/flycheck-janet"))
+
+
+(package! aggressive-indent)

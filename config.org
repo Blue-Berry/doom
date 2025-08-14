@@ -259,6 +259,12 @@ maybe this is needed
 **** TODO Fix go lsp
 You need to run ~lsp~ to start the server.
 
+*** Parinfer
+I'm not sure I like this.
+#+begin_src emacs-lisp :tangle no
+(setq-hook! 'parinfer-rust-mode-hook tab-always-indent nil)
+(add-hook 'parinfer-rust-mode-hook #'aggressive-indent-mode)
+#+end_src
 ** Key Bindings
 *** Evil escape
 #+begin_src emacs-lisp :tangle yes
