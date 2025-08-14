@@ -227,7 +227,7 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 #+end_src
 *** Janet
 **** Tree-sitter
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
 (setq treesit-language-source-alist
       (if (eq 'windows-nt system-type)
           '((janet-simple
@@ -238,6 +238,10 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 
 (when (not (treesit-language-available-p 'janet-simple))
   (treesit-install-language-grammar 'janet-simple))
+#+end_src
+**** Parinfer
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'janet-ts-mode-hook #'parinfer-rust-mode)
 #+end_src
 *** Go
 **** TODO verify the inlay hints
@@ -276,6 +280,10 @@ You need to run ~lsp~ to start the server.
            ("p" "~/playground/"        "playground")
            ("w" "~/work/"              "Work")
            ("n" "~/nixos-config/"      "NixOs"))))
+#+end_src
+*** Workspace
+#+begin_src emacs-lisp :tangle yes
+(map! :desc "Switch Workspace" :leader :n "TAB ," '+workspace/switch-to)
 #+end_src
 ** Spelling
 *** Set Dictionary
