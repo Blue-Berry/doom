@@ -239,6 +239,12 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 (when (not (treesit-language-available-p 'janet-simple))
   (treesit-install-language-grammar 'janet-simple))
 #+end_src
+**** LSP
+#+begin_src emacs-lisp :tangle yes
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(janet-ts-mode . ("janet-lsp"))))
+#+end_src
 **** Parinfer
 #+begin_src emacs-lisp :tangle yes
 (add-hook 'janet-ts-mode-hook #'parinfer-rust-mode)
