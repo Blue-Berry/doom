@@ -63,3 +63,10 @@
 
 
 (package! aggressive-indent)
+
+
+(package! org-roam-ui)
+
+
+(package! supermaven
+  :recipe (:host github :repo "WuuBoLin/supermaven.el"))

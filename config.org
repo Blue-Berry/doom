@@ -302,6 +302,11 @@ I'm not sure I like this.
 #+begin_src emacs-lisp :tangle yes
 (setq ispell-dictionary "en_GB")
 #+end_src
+** Supermaven
+#+begin_src emacs-lisp :tangle yes
+(use-package! supermaven
+  :hook (prog-mode . supermaven-mode))
+#+end_src
 * Explore
 ** Larceny
  * https://www.youtube.com/watch?v=cLa96bUPR_I
