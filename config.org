@@ -306,6 +306,8 @@ I'm not sure I like this.
 #+begin_src emacs-lisp :tangle yes
 (use-package! supermaven
   :hook (prog-mode . supermaven-mode))
+
+(add-hook 'prog-mode-hook 'supermaven-mode)
 #+end_src
 * Explore
 ** Larceny

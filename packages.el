@@ -56,6 +56,10 @@
   :recipe (:host github :repo "Blue-Berry/alloc_scan.el"
            :files ("alloc-scan.el")))
 
+(package! alloc-scan
+  :recipe (:host github :repo "Blue-Berry/mentasm.el"
+           :files ("mentasm.el")))
+
 (package! janet-ts-mode
   :recipe (:host github :repo "sogaiu/janet-ts-mode"))
 (package! flycheck-janet
@@ -70,3 +74,5 @@
 
 (package! supermaven
   :recipe (:host github :repo "WuuBoLin/supermaven.el"))
+
+(package! rmsbolt)
