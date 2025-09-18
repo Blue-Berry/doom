@@ -137,6 +137,20 @@ This is to set everything else to slightly transparent too (I think).
 #+begin_src emacs-lisp :tangle yes
 (global-hl-todo-mode 1)
 #+end_src
+*** Highlighting
+**** Mentasm
+#+begin_src emacs-lisp :tangle yes
+(after! doom-themes
+  (custom-set-faces!
+    ;; keep syntax colors, only add a soft tint
+    `(mentasm-current-line-face
+      :inherit unspecified            ;; don't pull default's fg
+      :foreground unspecified         ;; preserve font-lock colors
+      :background ,(doom-blend (doom-color 'blue) (doom-color 'bg) 0.15)
+      :weight semi-bold               ;; or :weight normal
+      :underline nil
+      :extend t)))
+#+end_src
 ** Org
 *** Appearance
 org modern mode hides some things and prettifies org mode.
