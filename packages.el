@@ -76,3 +76,13 @@
   :recipe (:host github :repo "WuuBoLin/supermaven.el"))
 
 (package! rmsbolt)
+
+(package! monet
+  :recipe (:host github :repo "stevemolitor/monet"))
+
+(package! claude-code
+  :recipe (:host github
+           :repo "stevemolitor/claude-code.el" 
+           :branch "main" 
+           :depth 1
+           :files ("*.el" (:exclude "images/*"))))
