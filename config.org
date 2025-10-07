@@ -337,6 +337,8 @@ I'm not sure I like this.
   (monet-mode 1)
 
   (claude-code-mode))
+
+(setq claude-code-terminal-backend 'vterm)
 #+end_src
 
 * Explore
