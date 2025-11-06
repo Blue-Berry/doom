@@ -236,19 +236,12 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 
 Enable the ~ocaml-eglot~ package.
 #+begin_src emacs-lisp
-(use-package flycheck-eglot
- :ensure t
- :after (flycheck eglot))
-
 (use-package ocaml-eglot
   :after tuareg
   :hook
   (tuareg-mode . ocaml-eglot)
   (ocaml-eglot . eglot-ensure)
-  (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t)))
-  (eglot-managed-mode . (lambda () (flycheck-eglot-mode 1))
-    :config
-    (setq ocaml-eglot-syntax-checker 'flycheck)))
+  (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
 
 (use-package dune
   :ensure t)
