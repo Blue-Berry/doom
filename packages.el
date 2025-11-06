@@ -49,6 +49,7 @@
 ;; (unpin! t)
 
 (package! ocaml-eglot)
+(package! flycheck-eglot)
 (package! evil-owl)
 (package! pinentry)
 (package! rainbow-delimiters)

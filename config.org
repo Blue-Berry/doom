@@ -169,22 +169,95 @@ change ~org-directory~. It must be set before org loads!
 (setq org-directory "~/org/")
 #+end_src
 ** Programming
+
+
 *** Ocaml
 **** Tuareg
 Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 #+begin_src emacs-lisp
 (remove-hook 'tuareg-mode-local-vars-hook #'opam-switch-mode)
 #+end_src
+***** Font Face
+#+begin_src emacs-lisp :tangle yes
+(setq tuareg-highlight-all-operators t)
+#+end_src
+
+ * ~list-colors-display~ to see a list of possible colours.
+ * ~describe-face~ to see face on frame, turn off ~hl-line-mode~ otherwise you will just see hl-line.
+ * ~list-faces-display~ to display list of faces.
+#+begin_src emacs-lisp :tangle yes
+(custom-set-faces!
+    '(tuareg-font-lock-constructor-face :foreground "#179299")
+    '(tuareg-font-lock-governing-face :foreground "#8839ef" :weight bold)
+    '(tuareg-font-lock-module-face :foreground "#7287fd"))
+
+;; tuareg-font-lock-attribute-face                  
+;; tuareg-font-lock-constructor-face                
+;; tuareg-font-lock-doc-markup-face                 
+;; tuareg-font-lock-doc-verbatim-face               
+;; tuareg-font-lock-error-face                      
+;; tuareg-font-lock-extension-node-face             
+;; tuareg-font-lock-governing-face                  
+;; tuareg-font-lock-infix-extension-node-face       
+;; tuareg-font-lock-interactive-directive-face      
+;; tuareg-font-lock-interactive-error-face          
+;; tuareg-font-lock-interactive-output-face         
+;; tuareg-font-lock-label-face                      
+;; tuareg-font-lock-line-number-face                
+;; tuareg-font-lock-multistage-face                 
+;; tuareg-font-lock-operator-face                   
+
+;; comments = { fg = #9399b2, style = { "italic" } },
+;; constants = { fg = #fe640b },
+;; escape_sequence = { fg = #ea76cb },
+;; functions = { fg = #1e66f5, style = { "italic" } },
+;; keywords = { fg = #8839ef },
+;; module_signature = { fg = #df8e1d },
+;; modules = { fg = #7287fd },
+;; parameters = { fg = #e64553 },
+;; parantheses_delimiters = { fg = #9399b2 },
+;; strings = { fg = #40a02b },
+;; symbols_atoms = { fg = #d20f39 },
+;; types = { fg = #179299 },
+;; union_members = { fg = #179299 },
+#+end_src
+
+#+RESULTS:
+| doom--customize-themes-h-42 | doom--customize-themes-h-41 | doom--customize-themes-h-835 | doom--customize-themes-h-836 |
+
+***** Mode name
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'tuareg-mode-hook
+          (lambda() (setq tuareg-mode-name "🐫")))
+#+end_src
+
+
 **** Eglot
 
 Enable the ~ocaml-eglot~ package.
 #+begin_src emacs-lisp
+(use-package flycheck-eglot
+ :ensure t
+ :after (flycheck eglot))
+
 (use-package ocaml-eglot
   :after tuareg
   :hook
   (tuareg-mode . ocaml-eglot)
   (ocaml-eglot . eglot-ensure)
-  (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
+  (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t)))
+  (eglot-managed-mode . (lambda () (flycheck-eglot-mode 1))
+    :config
+    (setq ocaml-eglot-syntax-checker 'flycheck)))
+
+(use-package dune
+  :ensure t)
+
+
+(use-package ocp-indent
+  :ensure t
+  :config
+  (add-hook 'ocaml-eglot-hook 'ocp-setup-indent))
 #+end_src
 
 Configure ~Ocamllsp~ settings.
@@ -193,8 +266,11 @@ Configure ~Ocamllsp~ settings.
   (add-to-list 'eglot-server-programs
                '(tuareg-mode . ("ocamllsp")))
   (setq-default eglot-workspace-configuration
-                '(:ocamllsp (:codelens t :inlayHints (:hintPatternVariables t :hintLetBindings t :hintFunctionParams t)))
-                ))
+                '(:codelens (:enable t)
+                  :inlayHints (:hintPatternVariables t
+                               :hintLetBindings t
+                               :hintFunctionParams t)
+                  :syntaxDocumentation (:enable t))))
 #+end_src
 
 *** Nix
@@ -284,6 +360,10 @@ I'm not sure I like this.
 #+begin_src emacs-lisp :tangle no
 (setq-hook! 'parinfer-rust-mode-hook tab-always-indent nil)
 (add-hook 'parinfer-rust-mode-hook #'aggressive-indent-mode)
+#+end_src
+*** Inlay Hints
+#+begin_src emacs-lisp :tangle yes
+(setq lsp-inlay-hint-enable t)
 #+end_src
 ** Key Bindings
 *** Evil escape
