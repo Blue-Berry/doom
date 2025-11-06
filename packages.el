@@ -56,7 +56,7 @@
   :recipe (:host github :repo "Blue-Berry/alloc_scan.el"
            :files ("alloc-scan.el")))
 
-(package! alloc-scan
+(package! mentasm
   :recipe (:host github :repo "Blue-Berry/mentasm.el"
            :files ("mentasm.el")))
 
