@@ -188,8 +188,9 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 #+begin_src emacs-lisp :tangle yes
 (custom-set-faces!
     '(tuareg-font-lock-constructor-face :foreground "#179299")
-    '(tuareg-font-lock-governing-face :foreground "#8839ef" :weight bold)
-    '(tuareg-font-lock-module-face :foreground "#7287fd"))
+    '(tuareg-font-lock-governing-face :foreground "#89b4fa" :weight normal :slant italic)
+    '(tuareg-font-lock-module-face :foreground "#7287fd")
+    '(font-lock-comment-face :slant italic))
 
 ;; tuareg-font-lock-attribute-face                  
 ;; tuareg-font-lock-constructor-face                
@@ -391,10 +392,10 @@ I'm not sure I like this.
 #+end_src
 ** Supermaven
 #+begin_src emacs-lisp :tangle yes
-(use-package! supermaven
-  :hook (prog-mode . supermaven-mode))
+;; (use-package! supermaven
+;;   :hook (prog-mode . supermaven-mode))
 
-(add-hook 'prog-mode-hook 'supermaven-mode)
+;; (add-hook 'prog-mode-hook 'supermaven-mode)
 #+end_src
 ** Claude
 #+begin_src emacs-lisp :tangle yes
