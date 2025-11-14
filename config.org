@@ -359,6 +359,11 @@ I'm not sure I like this.
 #+begin_src emacs-lisp :tangle yes
 (setq lsp-inlay-hint-enable t)
 #+end_src
+*** LSP
+#+begin_src emacs-lisp :tangle yes
+(setq! lsp-headerline-breadcrumb-enable t)
+#+end_src
+
 ** Key Bindings
 *** Evil escape
 #+begin_src emacs-lisp :tangle yes
