@@ -72,6 +72,13 @@ numbers are disabled. For relative line numbers, set this to ~relative~.
 
 #+begin_src emacs-lisp
 (setq display-line-numbers-type `relative)
+
+
+(after! doom-themes
+ (custom-set-faces!
+  `(line-number :foreground ,(doom-lighten (doom-color 'modeline-fg-alt) 0.3))
+  `(line-number-current-line :foreground ,(doom-color 'modeline-fg)))) ;; :weight bold
+
 #+end_src
 
 *** Fonts
