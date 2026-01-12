@@ -275,13 +275,16 @@ Configure ~Ocamllsp~ settings.
 #+begin_src emacs-lisp
 (after! eglot
   (add-to-list 'eglot-server-programs
-               '(tuareg-mode . ("ocamllsp")))
-  (setq-default eglot-workspace-configuration
-                '(:codelens (:enable t)
-                  :inlayHints (:hintPatternVariables t
-                               :hintLetBindings t
-                               :hintFunctionParams t)
-                  :syntaxDocumentation (:enable t))))
+               '(tuareg-mode . ("ocamllsp"))))
+
+(add-hook 'tuareg-mode-hook
+          (lambda ()
+            (setq-local eglot-workspace-configuration
+                        '(:codelens (:enable t)
+                          :inlayHints (:hintPatternVariables t
+                                       :hintLetBindings t
+                                       :hintFunctionParams t)
+                          :syntaxDocumentation (:enable t)))))
 #+end_src
 *** Rust
 #+begin_src emacs-lisp :tangle yes
