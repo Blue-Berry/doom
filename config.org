@@ -401,6 +401,9 @@ I'm not sure I like this.
                                          "typst-lsp")))))
 
 (add-hook 'typst-ts-mode-hook #'eglot-ensure)
+
+(after! typst-ts-mode
+  (setq typst-preview-executable typst-ts-lsp-download-path))
 #+end_src
 ** Key Bindings
 *** Evil escape

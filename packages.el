@@ -88,3 +88,4 @@
            :files ("*.el" (:exclude "images/*"))))
 
 (package! typst-ts-mode :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
+(package! typst-preview)
