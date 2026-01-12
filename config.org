@@ -188,8 +188,6 @@ change ~org-directory~. It must be set before org loads!
 (setq org-directory "~/org/")
 #+end_src
 ** Programming
-
-
 *** Ocaml
 **** Tuareg
 Remove ~opam-switch-mode~ to prevent errors when not using Opam.
@@ -284,6 +282,17 @@ Configure ~Ocamllsp~ settings.
                                :hintLetBindings t
                                :hintFunctionParams t)
                   :syntaxDocumentation (:enable t))))
+#+end_src
+*** Rust
+#+begin_src emacs-lisp :tangle yes
+(after! lsp-mode
+  (add-hook 'lsp-managed-mode-hook
+            (lambda ()
+              (when (and (derived-mode-p 'rustic-mode)
+                         (bound-and-true-p flycheck-mode)
+                         (not lsp-diagnostics--flycheck-report-fn))
+                (lsp-diagnostics-flycheck-enable)))
+            100))
 #+end_src
 
 *** Nix
@@ -382,7 +391,17 @@ I'm not sure I like this.
 #+begin_src emacs-lisp :tangle yes
 (setq! lsp-headerline-breadcrumb-enable t)
 #+end_src
+*** Typst
+#+begin_src emacs-lisp :tangle yes
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               `(typst-ts-mode . ,(eglot-alternatives
+                                   (list (expand-file-name typst-ts-lsp-download-path)
+                                         "tinymist"
+                                         "typst-lsp")))))
 
+(add-hook 'typst-ts-mode-hook #'eglot-ensure)
+#+end_src
 ** Key Bindings
 *** Evil escape
 #+begin_src emacs-lisp :tangle yes
