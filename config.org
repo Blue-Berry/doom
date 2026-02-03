@@ -280,11 +280,13 @@ Configure ~Ocamllsp~ settings.
 (add-hook 'tuareg-mode-hook
           (lambda ()
             (setq-local eglot-workspace-configuration
-                        '(:codelens (:enable t)
+                        '(:codelens (:enable t
+                                     :forNestedBindings t)
                           :inlayHints (:hintPatternVariables t
                                        :hintLetBindings t
                                        :hintFunctionParams t)
-                          :syntaxDocumentation (:enable t)))))
+                          :syntaxDocumentation (:enable t)
+                          :merlinJumpCodeActions (:enable t)))))
 #+end_src
 *** Rust
 #+begin_src emacs-lisp :tangle yes
@@ -393,20 +395,6 @@ I'm not sure I like this.
 *** LSP
 #+begin_src emacs-lisp :tangle yes
 (setq! lsp-headerline-breadcrumb-enable t)
-#+end_src
-*** Typst
-#+begin_src emacs-lisp :tangle yes
-(after! eglot
-  (add-to-list 'eglot-server-programs
-               `(typst-ts-mode . ,(eglot-alternatives
-                                   (list (expand-file-name typst-ts-lsp-download-path)
-                                         "tinymist"
-                                         "typst-lsp")))))
-
-(add-hook 'typst-ts-mode-hook #'eglot-ensure)
-
-(after! typst-ts-mode
-  (setq typst-preview-executable typst-ts-lsp-download-path))
 #+end_src
 ** Key Bindings
 *** Evil escape
