@@ -450,6 +450,11 @@ I'm not sure I like this.
 
 (setq claude-code-terminal-backend 'vterm)
 #+end_src
+** Projectile
+#+begin_src emacs-lisp :tangle yes
+(use-package! projectile :init
+ (setq projectile-project-search-path '(("~/work/" . 2) ("~/playground" . 2))))
+#+end_src
 
 * Explore
 ** Larceny
