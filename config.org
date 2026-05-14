@@ -253,7 +253,6 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
           (lambda() (setq tuareg-mode-name "🐫")))
 #+end_src
 
-
 **** Eglot
 
 Enable the ~ocaml-eglot~ package.
