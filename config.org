@@ -195,18 +195,18 @@ change ~org-directory~. It must be set before org loads!
 *** Ocaml
 **** Tuareg
 Remove ~opam-switch-mode~ to prevent errors when not using Opam.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (remove-hook 'tuareg-mode-local-vars-hook #'opam-switch-mode)
 #+end_src
 ***** Font Face
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (setq tuareg-highlight-all-operators t)
 #+end_src
 
  * ~list-colors-display~ to see a list of possible colours.
  * ~describe-face~ to see face on frame, turn off ~hl-line-mode~ otherwise you will just see hl-line.
  * ~list-faces-display~ to display list of faces.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (custom-set-faces!
     '(tuareg-font-lock-constructor-face :foreground "#179299")
     '(tuareg-font-lock-governing-face :foreground "#89b4fa" :weight normal :slant italic)
@@ -248,19 +248,80 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 | doom--customize-themes-h-42 | doom--customize-themes-h-41 | doom--customize-themes-h-835 | doom--customize-themes-h-836 |
 
 ***** Mode name
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
 (add-hook 'tuareg-mode-hook
           (lambda() (setq tuareg-mode-name "🐫")))
 #+end_src
 
+**** Neocaml
+#+begin_src emacs-lisp :tangle yes
+(use-package! neocaml
+  :hook
+  (neocaml-base-mode . eglot-ensure)
+  (neocaml-base-mode . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
+
+;; this font-locks everything neocaml supports
+(setopt treesit-font-lock-level 4)
+
+;; Enable for both .ml and .mli files at once
+(add-hook 'neocaml-base-mode-hook #'prettify-symbols-mode)
+
+(setopt neocaml-prettify-symbols-full t)
+(setopt neocaml-prettify-symbols-alist
+        '(("sqrt" . ?√)
+          ("cbrt" . ?∛)
+          ("&&" . ?∧)
+          ("||" . ?∨)
+          ("+." . ?∔)
+          ("-." . ?∸)
+          ("*." . ?∙)
+          ("/." . ?÷)
+          ("<-" . ?←)
+          ("<=" . ?≤)
+          (">=" . ?≥)
+          ("<>" . ?≠)
+          ("==" . ?≡)
+          ("!=" . ?≢)
+          ("<=>" . ?⇔)
+          ("infinity" . ?∞)
+          ("'a" . ?α)
+          ("'b" . ?β)
+          ("'c" . ?γ)
+          ("'d" . ?δ)
+          ("'e" . ?ε)
+          ("'f" . ?φ)
+          ("'i" . ?ι)
+          ("'k" . ?κ)
+          ("'m" . ?μ)
+          ("'n" . ?ν)
+          ("'o" . ?ω)
+          ("'p" . ?π)
+          ("'r" . ?ρ)
+          ("'s" . ?σ)
+          ("'t" . ?τ)
+          ("'x" . ?ξ)))
+
+(setopt neocaml-prettify-symbols-extra-alist
+        '(("fun" . ?λ)
+          ("not" . ?¬)
+          ("->" . ?→)
+          (":=" . ?⇐)
+          ("::" . ?∷)
+          ("[|" . ?〚)
+          ("|]" . ?〛)))
+
+(add-hook 'neocaml-base-mode-hook #'which-function-mode)
+
+(add-hook 'neocaml-base-mode-hook #'outline-minor-mode)
+#+end_src
 **** Eglot
 
 Enable the ~ocaml-eglot~ package.
 #+begin_src emacs-lisp
 (use-package ocaml-eglot
-  :after tuareg
+  :after neocaml
   :hook
-  (tuareg-mode . ocaml-eglot)
+  (neocaml-base-mode . ocaml-eglot)
   (ocaml-eglot . eglot-ensure)
   (ocaml-eglot . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
 
@@ -278,10 +339,10 @@ Configure ~Ocamllsp~ settings.
 #+begin_src emacs-lisp
 (after! eglot
   (add-to-list 'eglot-server-programs
-               '(tuareg-mode . ("ocamllsp")))
+               '(neocaml-base-mode . ("ocamllsp")))
   (defun my/eglot-workspace-config (server)
     "Return workspace configuration based on the current major mode."
-    (when (derived-mode-p 'tuareg-mode)
+    (when (derived-mode-p 'neocaml-base-mode)
       '(:codelens (:enable t :forNestedBindings t)
         :inlayHints (:hintPatternVariables t
                      :hintLetBindings t
