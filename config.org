@@ -260,6 +260,37 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
   (neocaml-base-mode . eglot-ensure)
   (neocaml-base-mode . (lambda () (add-hook #'before-save-hook #'eglot-format nil t))))
 
+
+(add-hook 'neocaml-base-mode-hook #'which-function-mode)
+
+(add-hook 'neocaml-base-mode-hook #'outline-minor-mode)
+#+end_src
+***** Dune
+#+begin_src emacs-lisp :tangle yes
+;; (dolist (hook '(neocaml-base-mode-hook
+;;                 neocaml-dune-mode-hook
+;;                 neocaml-opam-mode-hook))
+;;  (add-hook hook #'neocaml-dune-interaction-mode))
+
+(setq neocaml-dune-format-on-save t)
+#+end_src
+****** Bindings
+#+begin_src emacs-lisp :tangle yes
+(map! :map neocaml-mode-map
+      :localleader
+      (:prefix ("d" . "dune")
+       :desc "Build"          "b" #'neocaml-dune-build
+       :desc "Test"           "t" #'neocaml-dune-test
+       :desc "Clean"          "c" #'neocaml-dune-clean
+       :desc "Promote"        "p" #'neocaml-dune-promote
+       :desc "Format"         "f" #'neocaml-dune-fmt
+       :desc "Utop"           "u" #'neocaml-dune-utop
+       :desc "Exec"           "r" #'neocaml-dune-exec
+       :desc "Command"        "d" #'neocaml-dune-command
+       :desc "Find dune file" "." #'neocaml-dune-find-dune-file))
+#+end_src
+***** Symbols
+#+begin_src emacs-lisp :tangle yes
 ;; this font-locks everything neocaml supports
 (setopt treesit-font-lock-level 4)
 
@@ -309,10 +340,6 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
           ("::" . ?∷)
           ("[|" . ?〚)
           ("|]" . ?〛)))
-
-(add-hook 'neocaml-base-mode-hook #'which-function-mode)
-
-(add-hook 'neocaml-base-mode-hook #'outline-minor-mode)
 #+end_src
 **** Eglot
 
@@ -338,8 +365,6 @@ Enable the ~ocaml-eglot~ package.
 Configure ~Ocamllsp~ settings.
 #+begin_src emacs-lisp
 (after! eglot
-  (add-to-list 'eglot-server-programs
-               '(neocaml-base-mode . ("ocamllsp")))
   (defun my/eglot-workspace-config (server)
     "Return workspace configuration based on the current major mode."
     (when (derived-mode-p 'neocaml-base-mode)
