@@ -340,6 +340,9 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
           ("::" . ?∷)
           ("[|" . ?〚)
           ("|]" . ?〛)))
+
+(add-hook 'neocaml-base-mode-hook #'which-function-mode)
+(add-hook 'neocaml-base-mode-hook #'outline-minor-mode)
 #+end_src
 **** Eglot
 
@@ -365,6 +368,8 @@ Enable the ~ocaml-eglot~ package.
 Configure ~Ocamllsp~ settings.
 #+begin_src emacs-lisp
 (after! eglot
+  (add-to-list 'eglot-server-programs
+               '(neocaml-base-mode . ("ocamllsp")))
   (defun my/eglot-workspace-config (server)
     "Return workspace configuration based on the current major mode."
     (when (derived-mode-p 'neocaml-base-mode)
