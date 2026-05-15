@@ -276,7 +276,7 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 #+end_src
 ****** Bindings
 #+begin_src emacs-lisp :tangle yes
-(map! :map neocaml-mode-map
+(map! :map (neocaml-mode-map neocaml-interface-mode-map)
       :localleader
       (:prefix ("d" . "dune")
        :desc "Build"          "b" #'neocaml-dune-build
@@ -288,6 +288,12 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
        :desc "Exec"           "r" #'neocaml-dune-exec
        :desc "Command"        "d" #'neocaml-dune-command
        :desc "Find dune file" "." #'neocaml-dune-find-dune-file))
+#+end_src
+***** Bindings
+#+begin_src emacs-lisp :tangle yes
+(map! :map (neocaml-mode-map neocaml-interface-mode-map)
+      :localleader
+      :desc "Switch file"        "i" #'ff-find-other-file)
 #+end_src
 ***** Symbols
 #+begin_src emacs-lisp :tangle yes
@@ -343,6 +349,32 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 
 (add-hook 'neocaml-base-mode-hook #'which-function-mode)
 (add-hook 'neocaml-base-mode-hook #'outline-minor-mode)
+#+end_src
+***** Repl
+#+begin_src emacs-lisp :tangle yes
+;; Enable for both .ml and .mli files at once
+(add-hook 'neocaml-base-mode-hook #'neocaml-repl-minor-mode)
+
+(map! :map (neocaml-mode-map neocaml-interface-mode-map)
+      :localleader
+      (:prefix ("r" . "repl")
+       :desc "Start/Toggle"    "s" #'neocaml-repl-switch-to-repl
+       :desc "Send Definition" "d" #'neocaml-repl-send-definition
+       :desc "Send Region"     "r" #'neocaml-repl-send-region
+       :desc "Send Buffer"     "b" #'neocaml-repl-send-buffer
+       :desc "Send File"       "f" #'neocaml-repl-load-file
+       :desc "Send Phrase"     "f" #'neocaml-repl-send-phrase
+       :desc "Interrupt"       "i" #'neocaml-repl-interrupt
+       :desc "Clear"           "c" #'neocaml-repl-clear-buffer))
+
+
+;; (setopt neocaml-repl-program-name "utop")
+#+end_src
+***** Compiled Artifacts
+#+begin_src emacs-lisp :tangle yes
+(map! :map neocaml-mode-map
+      :localleader
+      :desc "View objinfo"        "o" #'neocaml-objinfo-view-file)
 #+end_src
 **** Eglot
 
@@ -519,30 +551,6 @@ I'm not sure I like this.
 *** Set Dictionary
 #+begin_src emacs-lisp :tangle yes
 (setq ispell-dictionary "en_GB")
-#+end_src
-** Supermaven
-#+begin_src emacs-lisp :tangle yes
-;; (use-package! supermaven
-;;   :hook (prog-mode . supermaven-mode))
-
-;; (add-hook 'prog-mode-hook 'supermaven-mode)
-#+end_src
-** Claude
-#+begin_src emacs-lisp :tangle yes
-(use-package claude-code
-  :bind-keymap
-  ("C-c c" . claude-code-command-map) ;; or your preferred key
-  ;; Optionally define a repeat map so that "M" will cycle thru Claude auto-accept/plan/confirm modes after invoking claude-code-cycle-mode / C-c M.
-  :bind
-  (:repeat-map my-claude-code-map ("M" . claude-code-cycle-mode))
-  :config
-  ;; optional IDE integration with Monet
-  (add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
-  (monet-mode 1)
-
-  (claude-code-mode))
-
-(setq claude-code-terminal-backend 'vterm)
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp :tangle yes
