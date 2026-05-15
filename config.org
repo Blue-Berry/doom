@@ -276,7 +276,7 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
 #+end_src
 ****** Bindings
 #+begin_src emacs-lisp :tangle yes
-(map! :map (neocaml-mode-map neocaml-interface-mode-map)
+(map! :map (neocaml-mode-map neocaml-interface-mode-map neocaml-dune-mode-map)
       :localleader
       (:prefix ("d" . "dune")
        :desc "Build"          "b" #'neocaml-dune-build
