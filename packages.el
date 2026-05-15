@@ -75,3 +75,5 @@
 
 (package! supermaven
   :recipe (:host github :repo "WuuBoLin/supermaven.el"))
+
+(package! dape)

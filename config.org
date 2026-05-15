@@ -376,6 +376,20 @@ Remove ~opam-switch-mode~ to prevent errors when not using Opam.
       :localleader
       :desc "View objinfo"        "o" #'neocaml-objinfo-view-file)
 #+end_src
+***** Dape
+#+begin_src emacs-lisp :tangle yes
+(map! :map neocaml-mode-map
+      :localleader
+      (:prefix ("g" . "Debug")
+       :desc "Next" "n" #'dape-next
+       :desc "Step Into" "i" #'dape-step-in
+       :desc "Step Out" "u" #'dape-step-out
+       :desc "Continue" "c" #'dape-continue
+       :desc "Breakpoint Toggle" "b" #'dape-breakpoint-toggle
+       :desc "Info" "f" #'dape-info
+       :desc "Repl" "r" #'dape-repl
+       :desc "Quit" "q" #'dape-quit))
+#+end_src
 **** Eglot
 
 Enable the ~ocaml-eglot~ package.
