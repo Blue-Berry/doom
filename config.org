@@ -560,6 +560,11 @@ I'm not sure I like this.
 *** Workspace
 #+begin_src emacs-lisp :tangle yes
 (map! :desc "Switch Workspace" :leader :n "TAB ," '+workspace/switch-to)
+
+
+(map!
+  :n "M-H" #'+workspace:switch-previous
+  :n "M-L" #'+workspace:switch-next)
 #+end_src
 ** Spelling
 *** Set Dictionary
