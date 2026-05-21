@@ -566,6 +566,40 @@ I'm not sure I like this.
   :n "M-H" #'+workspace:switch-previous
   :n "M-L" #'+workspace:switch-next)
 #+end_src
+** Emacs Everywhere
+#+begin_src emacs-lisp :tangle yes
+(after! emacs-everywhere
+  (require 'json)
+
+  (defun liam/emacs-everywhere-niri-app-info ()
+    "Return active window metadata from niri IPC."
+    (let* ((json-object-type 'alist)
+           (json-array-type 'list)
+           (json-key-type 'symbol)
+           (raw (shell-command-to-string "niri msg --json focused-window"))
+           (obj (ignore-errors (json-read-from-string raw))))
+      (unless (and (listp obj) (assq 'id obj))
+        (user-error "Could not read focused window from niri"))
+      (make-emacs-everywhere-app
+       :id (number-to-string (or (alist-get 'id obj) 0))
+       :class (or (alist-get 'app_id obj) "unknown")
+       :title (or (alist-get 'title obj) "")
+       :geometry '(0 0 0 0))))
+
+  (defun liam/emacs-everywhere-force-niri-backend (&rest _)
+    "Force a known-good Niri backend for emacs-everywhere."
+    (setq emacs-everywhere--paste-command
+          '("wtype" "-M" "Shift" "-P" "Insert" "-m" "Shift" "-p" "Insert")
+          emacs-everywhere--copy-command
+          '("sh" "-c" "wl-copy < %f")
+          emacs-everywhere--window-focus-command
+          '("niri" "msg" "action" "focus-window" "--id" "%w")
+          emacs-everywhere--app-info-function
+          #'liam/emacs-everywhere-niri-app-info))
+
+  (advice-add 'emacs-everywhere--ensure-system-configured :after
+              #'liam/emacs-everywhere-force-niri-backend))
+#+end_src
 ** Spelling
 *** Set Dictionary
 #+begin_src emacs-lisp :tangle yes
