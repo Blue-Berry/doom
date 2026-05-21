@@ -77,3 +77,7 @@
   :recipe (:host github :repo "WuuBoLin/supermaven.el"))
 
 (package! dape)
+
+(unpin! emacs-everywhere)
+(package! emacs-everywhere
+  :recipe (:host github :repo "tecosaur/emacs-everywhere"))
