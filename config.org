@@ -589,7 +589,7 @@ I'm not sure I like this.
   (defun liam/emacs-everywhere-force-niri-backend (&rest _)
     "Force a known-good Niri backend for emacs-everywhere."
     (setq emacs-everywhere--paste-command
-          '("wtype" "-M" "Shift" "-P" "Insert" "-m" "Shift" "-p" "Insert")
+          '("wtype" "-M" "Ctrl" "-M" "Shift" "-P" "v" "-m" "Shift" "-m" "Ctrl" "-p" "v")
           emacs-everywhere--copy-command
           '("sh" "-c" "wl-copy < %f")
           emacs-everywhere--window-focus-command
