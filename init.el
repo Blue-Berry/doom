@@ -21,17 +21,17 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       ;;company           ; the ultimate code completion backend
+       ;; (company +childframe)           ; the ultimate code completion backend
        (corfu +dabbrev +icons)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;;ivy               ; a search engine for love and life
-       (vertico +icons)           ; the search engine of the future
+       (vertico +icons +childframe)           ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
-       doom-dashboard    ; a nifty splash screen for Emacs
+       ;; doom-dashboard    ; a nifty splash screen for Emacs
+       dashboard
        ;; doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji +unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
@@ -60,7 +60,7 @@
        (format +lsp +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
-       ;;multiple-cursors  ; editing in many places at once
+       multiple-cursors  ; editing in many places at once
        ;;objed             ; text object editing for the innocent
        parinfer          ; turn lisp into python, sort of
        ;;rotate-text       ; cycle region at point between text candidates
@@ -70,7 +70,7 @@
 
        :emacs
        (dired +dirvish +icons)             ; making dired pretty [functional]
-       ;; electric          ; smarter, keyword-based electric-indent
+       electric          ; smarter, keyword-based electric-indent
        ;;eww               ; the internet is gross
        ;; (ibuffer +icons)           ; interactive buffer management
        (undo +tree)              ; persistent, smarter undo for your inevitable mistakes
@@ -100,8 +100,8 @@
        (eval +overlay)     ; run code, run (also, repls)
        (lookup +docsets +dictionary)              ; navigate your code and its documentation
        ;; llm               ; when I said you needed friends, I didn't mean...
-       (lsp +eglot)                ; M-x vscode
-       magit             ; a git porcelain for Emacs
+       (lsp +eglot +booster)                ; M-x vscode
+       (magit +childframe)             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;; (pass +auth)              ; password manager for nerds TODO: enable this
        pdf               ; pdf enhancements
@@ -193,10 +193,10 @@
        :app
        ;;calendar
        ;;emms
-       ;; everywhere        ; *leave* Emacs!? You must be joking
+       everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader TODO: Include
 
        :config
        literate
-       (default +bindings +smartparens +gnupg))
+       (default +bindings +smartparens))
