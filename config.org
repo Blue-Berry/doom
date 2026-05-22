@@ -617,6 +617,11 @@ I'm not sure I like this.
            :class app-name
            :title window-title
            :geometry window-geometry)))))
+
+  (add-to-list 'emacs-everywhere-markdown-apps "zen-beta")
+  (add-to-list 'emacs-everywhere-markdown-apps "obsidian")
+  (add-to-list 'emacs-everywhere-markdown-windows "Obsidian")
+
   (my-emacs-everywhere/update-niri-socket))
 #+end_src
 ** Spelling
