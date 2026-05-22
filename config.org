@@ -570,54 +570,54 @@ I'm not sure I like this.
 #+begin_src emacs-lisp :tangle yes
 (use-package! emacs-everywhere
   :config
- (setq emacs-everywhere-system-configs
-         (append emacs-everywhere-system-configs
-                 '(((wayland . niri)
-                    :focus-command ("niri" "msg" "action" "focus-window" "--id" "%w")
-                    :info-function emacs-everywhere--app-info-linux-niri))))
+  (setq emacs-everywhere-system-configs
+        (append emacs-everywhere-system-configs
+                '(((wayland . niri)
+                   :focus-command ("niri" "msg" "action" "focus-window" "--id" "%w")
+                   :info-function emacs-everywhere--app-info-linux-niri))))
 
- (defun my-emacs-everywhere/update-niri-socket ()
-   ;; NOTE: If you use doomemacs, you will likely need to update this
-   ;; environment variable so that `niri msg' interfaces with the correct
-   ;; socket. You only need this once per server initialization: place this in
-   ;; (use-package! emacs-everywhere :config ...)  or an
-   ;; (after! emacs-everywhere ...) block.
-   (let* ((rundir (format "/run/user/%d/" (user-uid)))
-          (sockets (when (file-directory-p rundir)
+  (defun my-emacs-everywhere/update-niri-socket ()
+    ;; NOTE: If you use doomemacs, you will likely need to update this
+    ;; environment variable so that `niri msg' interfaces with the correct
+    ;; socket. You only need this once per server initialization: place this in
+    ;; (use-package! emacs-everywhere :config ...)  or an
+    ;; (after! emacs-everywhere ...) block.
+    (let* ((rundir (format "/run/user/%d/" (user-uid)))
+           (sockets (when (file-directory-p rundir)
                       (directory-files rundir nil "^niri.*sock$" t)))
-          ;; NOTE: we assume that there will only be one socket
-          (socket-file (if (consp sockets)
-                        (concat rundir (car sockets))
-                        nil)))
-     (if socket-file
-         (setenv "NIRI_SOCKET" socket-file)
-         ;; the nil case will fall back on whatever can be found by `getenv'
-         (message "Could not find an active niri socket"))))
+           ;; NOTE: we assume that there will only be one socket
+           (socket-file (if (consp sockets)
+                            (concat rundir (car sockets))
+                          nil)))
+      (if socket-file
+          (setenv "NIRI_SOCKET" socket-file)
+        ;; the nil case will fall back on whatever can be found by `getenv'
+        (message "Could not find an active niri socket"))))
 
- (defun emacs-everywhere--app-info-linux-niri ()
-   "Return information on the current active window, on a Linux Niri session."
-   (require 'json)
-   (let*
-     ((json-raw (emacs-everywhere--call "niri" "msg" "-j" "focused-window"))
-      (is-err (string-prefix-p "Error" json-raw)))
-    (if is-err
-        (progn
-          (message "[emacs-everywhere] %s" json-raw)
-          (message "[emacs-everywhere] NIRI_SOCKET=%s" (getenv "NIRI_SOCKET"))
-          (error "[emacs-everywhere] Error in `niri msg -j focused-window' (see *messages*)"))
+  (defun emacs-everywhere--app-info-linux-niri ()
+    "Return information on the current active window, on a Linux Niri session."
+    (require 'json)
+    (let*
+        ((json-raw (emacs-everywhere--call "niri" "msg" "-j" "focused-window"))
+         (is-err (string-prefix-p "Error" json-raw)))
+      (if is-err
+          (progn
+            (message "[emacs-everywhere] %s" json-raw)
+            (message "[emacs-everywhere] NIRI_SOCKET=%s" (getenv "NIRI_SOCKET"))
+            (error "[emacs-everywhere] Error in `niri msg -j focused-window' (see *messages*)"))
         (let*
-           ((json (json-read-from-string json-raw)) ;; -j for json
-            (wid (cdr (assq 'id json)))
-            (window-id (if (numberp wid) (number-to-string wid) wid))
-            (window-title (cdr (assq 'title json)))
-            (app-name (cdr (assq 'app_id json)))
-            (window-geometry nil)) ;; no geometry in niri
-           (make-emacs-everywhere-app
-            :id window-id
-            :class app-name
-            :title window-title
-            :geometry window-geometry))))))
-
+            ((json (json-read-from-string json-raw)) ;; -j for json
+             (wid (cdr (assq 'id json)))
+             (window-id (if (numberp wid) (number-to-string wid) wid))
+             (window-title (cdr (assq 'title json)))
+             (app-name (cdr (assq 'app_id json)))
+             (window-geometry nil)) ;; no geometry in niri
+          (make-emacs-everywhere-app
+           :id window-id
+           :class app-name
+           :title window-title
+           :geometry window-geometry)))))
+  (my-emacs-everywhere/update-niri-socket))
 #+end_src
 ** Spelling
 *** Set Dictionary
