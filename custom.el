@@ -14,7 +14,23 @@
  '(ignored-local-variable-values '((lsp-enabled-clients nixd)))
  '(package-selected-packages
    '(apheleia dape djvu flycheck-golangci-lint flymake-golangci merlin nixfmt
-     ocamlformat ocp-indent pinentry shfmt utop vterm)))
+     ocamlformat ocp-indent pinentry shfmt utop vterm))
+ '(safe-local-variable-values
+   '((eval defun my/restclient-base-url nil
+      (or my/restclient-base-url
+       (setq my/restclient-base-url
+             (completing-read "Base URL: "
+                              '("https://apex-api.myrubicon.tech"
+                                "https://beta-api.myrubicon.tech"
+                                "http://localhost:8443")
+                              nil t nil nil "https://beta-api.myrubicon.tech"))))
+     (eval defvar my/restclient-base-url nil)
+     (eval setq restclient-enable-eval t)
+     (eval defun my/restclient-api-key nil
+      (or my/restclient-api-key
+          (setq my/restclient-api-key (read-passwd "API key: "))))
+     (eval defvar my/restclient-api-key nil)
+     (eval setq-local restclient-enable-eval t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

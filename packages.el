@@ -61,8 +61,8 @@
   :recipe (:host github :repo "Blue-Berry/mentasm.el"
            :files ("mentasm.el")))
 
-(package! janet-ts-mode
-  :recipe (:host github :repo "sogaiu/janet-ts-mode"))
+;; (package! janet-ts-mode
+;;   :recipe (:host github :repo "sogaiu/janet-ts-mode"))
 (package! flycheck-janet
   :recipe (:host github :repo "sogaiu/flycheck-janet"))
 
@@ -81,3 +81,4 @@
 (unpin! emacs-everywhere)
 (package! emacs-everywhere
   :recipe (:host github :repo "tecosaur/emacs-everywhere"))
+(package! eca :recipe (:host github :repo "editor-code-assistant/eca-emacs" :files ("*.el")))
