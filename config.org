@@ -166,7 +166,7 @@ This is to set everything else to slightly transparent too (I think).
 *** Dashboard
 #+begin_src emacs-lisp :tangle yes
 (setq fancy-splash-image
-      (expand-file-name "assets/nudibranch_30pct.png" doom-user-dir))
+      (expand-file-name "assets/nudibranch_30pct.xpm" doom-user-dir))
 #+end_src
 ** Format
 #+begin_src emacs-lisp :tangle yes
