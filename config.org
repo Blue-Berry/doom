@@ -142,7 +142,7 @@ This is to set everything else to slightly transparent too (I think).
 #+end_src
 *** Text Scale
 #+begin_src emacs-lisp :tangle yes
-(set-face-attribute 'default nil :height 80)
+(set-face-attribute 'default nil :height 75)
 #+end_src
 *** To Do highlighting
 #+begin_src emacs-lisp :tangle yes
