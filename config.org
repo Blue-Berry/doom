@@ -191,6 +191,12 @@ org modern mode hides some things and prettifies org mode.
  org-hide-emphasis-markers t
  org-modern-star 'replace)  ;; hides *bold* / /italic/ markers
 #+end_src
+*** Preview Latex Math
+#+begin_src emacs-lisp :tangle yes
+(setopt org-preview-latex-default-process 'dvisvgm)
+(setopt org-format-latex-options
+  (plist-put org-format-latex-options :scale 0.8))
+#+end_src
 *** Location
 If you use ~org~ and don't want your org files in the default location below,
 change ~org-directory~. It must be set before org loads!
