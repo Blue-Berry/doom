@@ -166,7 +166,9 @@ This is to set everything else to slightly transparent too (I think).
 accepted options are: svg, webp, png, gif, tiff, jpeg, xpm, xbm, pbm
 #+begin_src emacs-lisp :tangle yes
 (setq fancy-splash-image
-      (expand-file-name "assets/nudibranch_xbg_30pct.xpm" doom-user-dir))
+      (let* ((images (list
+                      (expand-file-name "assets/nudibranch_xbg_30pct.xpm" doom-user-dir))))
+        (nth (random (length images)) images)))
 #+end_src
 ** Format
 #+begin_src emacs-lisp :tangle yes
@@ -193,9 +195,10 @@ org modern mode hides some things and prettifies org mode.
 #+end_src
 *** Preview Latex Math
 #+begin_src emacs-lisp :tangle yes
-(setopt org-preview-latex-default-process 'dvisvgm)
-(setopt org-format-latex-options
-  (plist-put org-format-latex-options :scale 0.8))
+(after! org
+  (setopt org-preview-latex-default-process 'dvisvgm)
+  (setopt org-format-latex-options
+          (plist-put org-format-latex-options :scale 0.8)))
 #+end_src
 *** Location
 If you use ~org~ and don't want your org files in the default location below,
