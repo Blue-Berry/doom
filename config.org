@@ -649,6 +649,13 @@ I'm not sure I like this.
 (use-package! projectile :init
  (setq projectile-project-search-path '(("~/work/" . 2) ("~/playground" . 2))))
 #+end_src
+** Magit
+Use [[https://github.com/dandavison/magit-delta][magit-delta]] to syntax-highlight diffs in magit status using ~delta~.
+#+begin_src emacs-lisp :tangle yes
+(use-package! magit-delta
+  :after magit
+  :hook (magit-mode . magit-delta-mode))
+#+end_src
 
 * Explore
 ** Larceny

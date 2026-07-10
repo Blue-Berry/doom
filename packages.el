@@ -82,3 +82,5 @@
 (package! emacs-everywhere
   :recipe (:host github :repo "tecosaur/emacs-everywhere"))
 (package! eca :recipe (:host github :repo "editor-code-assistant/eca-emacs" :files ("*.el")))
+
+(package! magit-delta)
