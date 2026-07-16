@@ -667,7 +667,7 @@ plain line backgrounds only.
 (after! magit
   (setq magit-diff-fontify-hunk t
         magit-diff-use-indicator-faces t
-        magit-diff-refine-hunk t))
+        magit-diff-refine-hunk nil))
 #+end_src
 
 * Explore
