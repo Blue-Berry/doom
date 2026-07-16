@@ -650,11 +650,24 @@ I'm not sure I like this.
  (setq projectile-project-search-path '(("~/work/" . 2) ("~/playground" . 2))))
 #+end_src
 ** Magit
-Use [[https://github.com/dandavison/magit-delta][magit-delta]] to syntax-highlight diffs in magit status using ~delta~.
+Native diff syntax highlighting (Magit 4.6.0+, [[https://github.com/magit/magit/issues/2942][#2942]]):
+- ~magit-diff-fontify-hunk~ turns it on.
+- ~magit-diff-specify-hunk-foreground~ nil lets syntax colors show (set before
+  magit loads; needs a restart).
+- ~magit-diff-use-indicator-faces~ keeps the +/- signs legible.
+
+~magit-diff-refine-hunk~ (word-level highlighting): unlike delta, Magit word-diffs
+the whole hunk as one blob instead of pairing lines, so asymmetric hunks (few
+removed, many added) light up almost entirely. Experiment: refine only the
+current hunk (=t=) with delta-style bold/subtle refine faces. Set to nil for
+plain line backgrounds only.
 #+begin_src emacs-lisp :tangle yes
-(use-package! magit-delta
-  :after magit
-  :hook (magit-mode . magit-delta-mode))
+(setq magit-diff-specify-hunk-foreground nil)
+
+(after! magit
+  (setq magit-diff-fontify-hunk t
+        magit-diff-use-indicator-faces t
+        magit-diff-refine-hunk t))
 #+end_src
 
 * Explore
