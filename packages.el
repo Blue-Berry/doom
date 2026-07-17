@@ -82,3 +82,8 @@
 (package! emacs-everywhere
   :recipe (:host github :repo "tecosaur/emacs-everywhere"))
 (package! eca :recipe (:host github :repo "editor-code-assistant/eca-emacs" :files ("*.el")))
+
+;; WhatsApp client. Needs the wuzapi binary, installed via nixos-config.
+(package! acp)
+(package! wasabi
+  :recipe (:host github :repo "xenodium/wasabi" :files ("*.el")))
