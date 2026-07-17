@@ -670,6 +670,98 @@ plain line backgrounds only.
         magit-diff-refine-hunk nil))
 #+end_src
 
+** Wasabi
+WhatsApp client. Needs the ~wuzapi~ binary, installed via =nixos-config=.
+
+*** Evil bindings
+Both ~wasabi-mode~ (chat list) and ~wasabi-chat-mode~ derive from ~fundamental-mode~,
+so evil starts them in normal state, where evil's own ~c~/~q~/~g~/~n~/~p~ shadow
+wasabi's. Upstream's single-letter keys only reach us in insert state, hence
+the "insert first, then the key" dance. Fix: bind them in normal state, which
+~evil-define-key~ puts in an auxiliary map that outranks evil's defaults.
+
+Left alone deliberately:
+- ~RET~ on a chat row already works — wasabi attaches a ~keymap~ text property,
+  which Emacs consults *before* evil's maps.
+- Insert state already falls through to wasabi's maps, so typing is unaffected.
+- ~n~ (search) and ~p~ (paste) stay evil's; message navigation gets ~C-n~/~C-p~.
+  Paste matters here — it's how you send yanked text.
+
+~wasabi-chat-quit~, ~-refresh~, ~-next-message~ and ~-previous-message~ call
+~self-insert-command~ when point is in the input area, so vanilla users can type
+~q~/~g~/~n~/~p~ into it. In normal state we always want the command, so these
+wrappers disable that check.
+#+begin_src emacs-lisp :tangle yes
+(defun +wasabi--as-command (fn)
+  "Call FN, bypassing wasabi's input-area `self-insert-command' fallback."
+  (cl-letf (((symbol-function 'wasabi-chat--in-input-area-p) #'ignore))
+    (call-interactively fn)))
+
+(defun +wasabi/chat-quit ()
+  "Quit the chat buffer."
+  (interactive)
+  (+wasabi--as-command #'wasabi-chat-quit))
+
+(defun +wasabi/chat-refresh ()
+  "Refresh the chat buffer."
+  (interactive)
+  (+wasabi--as-command #'wasabi-chat-refresh))
+
+(defun +wasabi/chat-next-message ()
+  "Jump to the next message."
+  (interactive)
+  (+wasabi--as-command #'wasabi-chat-next-message))
+
+(defun +wasabi/chat-previous-message ()
+  "Jump to the previous message."
+  (interactive)
+  (+wasabi--as-command #'wasabi-chat-previous-message))
+
+(defun +wasabi/chat-insert ()
+  "Enter insert state, jumping to the input prompt when point is outside it."
+  (interactive)
+  (unless (wasabi-chat--in-input-area-p)
+    (goto-char (point-max)))
+  (evil-insert-state))
+
+(defun +wasabi/chat-append ()
+  "Jump to the end of the input prompt and enter insert state."
+  (interactive)
+  (goto-char (point-max))
+  (evil-insert-state))
+
+(defun +wasabi/chat-newline ()
+  "Insert a newline in the input area, for multi-line messages."
+  (interactive)
+  (if (wasabi-chat--in-input-area-p)
+      (insert "\n")
+    (user-error "Not in the chat input area")))
+
+(after! wasabi
+  (map! :map wasabi-mode-map
+        :n "q" #'wasabi-quit
+        :n "c" #'wasabi-new-chat
+        :n "C" #'wasabi-new-chat
+        :n "+" #'wasabi-new-chat-new-number
+        :n "gr" #'wasabi-reload)
+
+  (map! :map wasabi-chat-mode-map
+        :n "q" #'+wasabi/chat-quit
+        :n "gr" #'+wasabi/chat-refresh
+        :n "C-n" #'+wasabi/chat-next-message
+        :n "C-p" #'+wasabi/chat-previous-message
+        :n "i" #'+wasabi/chat-insert
+        :n "A" #'+wasabi/chat-append
+        :n "RET" #'wasabi-chat-send-input
+        :n "TAB" #'wasabi-chat-next-actionable
+        :n "S-TAB" #'wasabi-chat-previous-actionable
+        :n "<backtab>" #'wasabi-chat-previous-actionable
+        ;; GUI Emacs sends <S-return>; "S-RET" is the (terminal) ?\r variant.
+        ;; Bind both so multi-line input works either way.
+        :i "S-<return>" #'+wasabi/chat-newline
+        :i "S-RET" #'+wasabi/chat-newline))
+#+end_src
+
 * Explore
 ** Larceny
  * https://www.youtube.com/watch?v=cLa96bUPR_I
