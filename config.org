@@ -762,6 +762,55 @@ wrappers disable that check.
         :i "S-RET" #'+wasabi/chat-newline))
 #+end_src
 
+* Email
+** mu4e + mbsync
+Mail is synced by =mbsync= (isync), configured via home-manager in
+=nixos-config/modules/home-manager/modules/apps/mail.nix=, which writes
+maildirs under =~/Mail= and indexes them with =mu=. A systemd timer runs the
+sync every 5 minutes. This section just points Doom's mu4e module at that
+maildir and defines the account context(s).
+
+Sending goes through =msmtp= (configured in mail.nix), which selects the
+account from the envelope From address. This keeps one send path for both
+Gmail (app password) and Outlook (XOAUTH2 token via oama) — Emacs's built-in
+=smtpmail= can't do XOAUTH2 cleanly.
+
+#+begin_src emacs-lisp :tangle yes
+(after! mu4e
+  ;; Must match `maildirBasePath` in home-manager mail.nix (~/Mail) and the
+  ;; `mu init --maildir=~/Mail ...` you run once.
+  (setq mu4e-maildir "~/Mail"
+        ;; `U` in the mu4e main view runs this on demand; the systemd timer
+        ;; already syncs in the background, so leaving mu4e-update-interval
+        ;; nil (Doom's default) avoids two mbsync processes racing.
+        mu4e-get-mail-command "mbsync --all"
+        ;; Send via msmtp; it picks the account by the From address.
+        sendmail-program (executable-find "msmtp")
+        send-mail-function #'message-send-mail-with-sendmail
+        message-send-mail-function #'message-send-mail-with-sendmail
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")))
+
+(set-email-account! "gmail"
+  '((user-full-name     . "Liam Berry")
+    (user-mail-address  . "liamandberry@gmail.com")
+    (mu4e-sent-folder   . "/gmail/[Gmail]/Sent Mail")
+    (mu4e-drafts-folder . "/gmail/[Gmail]/Drafts")
+    (mu4e-trash-folder  . "/gmail/[Gmail]/Trash")
+    (mu4e-refile-folder . "/gmail/[Gmail]/All Mail"))
+  t)
+
+(set-email-account! "outlook"
+  '((user-full-name     . "Liam Berry")
+    (user-mail-address  . "liam.berry@rubiconsa.com")
+    ;; Standard Office365 folder names; adjust if `find ~/Mail/outlook` differs.
+    (mu4e-sent-folder   . "/outlook/Sent Items")
+    (mu4e-drafts-folder . "/outlook/Drafts")
+    (mu4e-trash-folder  . "/outlook/Deleted Items")
+    (mu4e-refile-folder . "/outlook/Archive"))
+  nil)
+#+end_src
+
 * Explore
 ** Larceny
  * https://www.youtube.com/watch?v=cLa96bUPR_I
