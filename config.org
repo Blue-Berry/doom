@@ -80,6 +80,12 @@ numbers are disabled. For relative line numbers, set this to ~relative~.
   `(line-number-current-line :foreground ,(doom-color 'modeline-fg)))) ;; :weight bold
 
 #+end_src
+*** Links
+#+begin_src emacs-lisp
+(after! doom-themes
+  (custom-set-faces!
+   '(link :underline nil)))
+#+end_src
 
 *** Fonts
 Doom exposes five (optional) variables for controlling fonts in Doom:
@@ -764,17 +770,6 @@ wrappers disable that check.
 
 * Email
 ** mu4e + mbsync
-Mail is synced by =mbsync= (isync), configured via home-manager in
-=nixos-config/modules/home-manager/modules/apps/mail.nix=, which writes
-maildirs under =~/Mail= and indexes them with =mu=. A systemd timer runs the
-sync every 5 minutes. This section just points Doom's mu4e module at that
-maildir and defines the account context(s).
-
-Sending goes through =msmtp= (configured in mail.nix), which selects the
-account from the envelope From address. This keeps one send path for both
-Gmail (app password) and Outlook (XOAUTH2 token via oama) — Emacs's built-in
-=smtpmail= can't do XOAUTH2 cleanly.
-
 #+begin_src emacs-lisp :tangle yes
 (after! mu4e
   ;; Must match `maildirBasePath` in home-manager mail.nix (~/Mail) and the
@@ -789,7 +784,8 @@ Gmail (app password) and Outlook (XOAUTH2 token via oama) — Emacs's built-in
         send-mail-function #'message-send-mail-with-sendmail
         message-send-mail-function #'message-send-mail-with-sendmail
         message-sendmail-f-is-evil t
-        message-sendmail-extra-arguments '("--read-envelope-from")))
+        message-sendmail-extra-arguments '("--read-envelope-from"))
+  (setq mu4e-trash-without-flag t))
 
 (set-email-account! "gmail"
   '((user-full-name     . "Liam Berry")
