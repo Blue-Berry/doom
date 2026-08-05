@@ -87,3 +87,7 @@
 (package! acp)
 (package! wasabi
   :recipe (:host github :repo "xenodium/wasabi" :files ("*.el")))
+
+(package! mu4e :built-in t)
+(package! nano-mu4e
+  :recipe (:host github :repo "rougier/nano-mu4e"))

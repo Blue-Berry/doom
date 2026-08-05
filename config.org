@@ -787,6 +787,32 @@ wrappers disable that check.
         message-sendmail-extra-arguments '("--read-envelope-from"))
   (setq mu4e-trash-without-flag t))
 
+(after! mu4e
+  (require 'nano-mu4e)
+
+  (setq nano-mu4e-view-style 'regular
+        nano-mu4e-tag-style 'round
+        nano-mu4e-msg-preview nil)
+
+  ;; nano-mu4e ships an opinionated minor-mode map. Keep Doom/Evil's mu4e
+  ;; bindings authoritative and expose nano-specific controls under a local
+  ;; leader prefix instead.
+  (setcdr nano-mu4e-mode-map nil)
+
+  (defun +mu4e-enable-nano-mu4e-h ()
+    "Enable `nano-mu4e-mode' without toggle semantics."
+    (nano-mu4e-mode 1))
+
+  (add-hook 'mu4e-headers-mode-hook #'+mu4e-enable-nano-mu4e-h)
+
+  (map! :map mu4e-headers-mode-map
+        :localleader
+        (:prefix ("n" . "nano")
+         :desc "Fold thread"       "f" #'nano-mu4e-fold-toggle
+         :desc "Fold all threads"  "F" #'nano-mu4e-fold-toggle-all
+         :desc "Cycle view style"  "v" #'nano-mu4e-view-style-cycle
+         :desc "Cycle tag style"   "t" #'nano-mu4e-tag-style-cycle)))
+
 (set-email-account! "gmail"
   '((user-full-name     . "Liam Berry")
     (user-mail-address  . "liamandberry@gmail.com")
