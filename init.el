@@ -102,7 +102,7 @@
        (lsp +eglot +booster)                ; M-x vscode
        (magit +childframe)             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
-       ;; (pass +auth)              ; password manager for nerds TODO: enable this
+       (pass +auth)              ; password manager for nerds TODO: enable this
        pdf               ; pdf enhancements
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
