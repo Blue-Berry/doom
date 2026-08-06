@@ -831,6 +831,9 @@ wrappers disable that check.
     (mu4e-trash-folder  . "/outlook/Deleted Items")
     (mu4e-refile-folder . "/outlook/Archive"))
   nil)
+
+;; Periodic update
+(setopt mu4e-update-interval 60)
 #+end_src
 
 * Explore
