@@ -790,6 +790,10 @@ wrappers disable that check.
 (after! mu4e
   (require 'nano-mu4e)
 
+  ;; Mail retrieval is owned by the systemd mbsync/imapnotify services.  Keep
+  ;; mu4e's own timer disabled so it cannot bypass their shared lock.
+  (setq mu4e-update-interval nil)
+
   (setq nano-mu4e-view-style 'regular
         nano-mu4e-tag-style 'round
         nano-mu4e-msg-preview nil)
@@ -804,6 +808,10 @@ wrappers disable that check.
     (nano-mu4e-mode 1))
 
   (add-hook 'mu4e-headers-mode-hook #'+mu4e-enable-nano-mu4e-h)
+
+  (map! :map mu4e-main-mode-map
+        :n "q" (cmd! (mu4e-quit t))
+        :n "Q" #'mu4e-quit)
 
   (map! :map mu4e-headers-mode-map
         :localleader
@@ -832,8 +840,12 @@ wrappers disable that check.
     (mu4e-refile-folder . "/outlook/Archive"))
   nil)
 
-;; Periodic update
-(setopt mu4e-update-interval 60)
+(add-hook 'doom-after-init-hook
+          (defun +mu4e-start-background-h ()
+            "Start mu4e headlessly in an Emacs daemon."
+            (when (daemonp)
+              (mu4e t))))
+
 #+end_src
 
 * Explore
