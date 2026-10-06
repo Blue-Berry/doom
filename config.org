@@ -595,7 +595,11 @@ I'm not sure I like this.
         (append emacs-everywhere-system-configs
                 '(((wayland . niri)
                    :focus-command ("niri" "msg" "action" "focus-window" "--id" "%w")
+                   :paste-command ("wtype" "-M" "shift" "-k" "Insert" "-m" "shift")
                    :info-function emacs-everywhere--app-info-linux-niri))))
+
+  ;; Give Niri time to focus the original window before simulating paste.
+  (setq emacs-everywhere-clipboard-sleep-delay 0.05)
 
   (defun my-emacs-everywhere/update-niri-socket ()
     ;; NOTE: If you use doomemacs, you will likely need to update this
@@ -789,6 +793,9 @@ wrappers disable that check.
 
 (after! mu4e
   (require 'nano-mu4e)
+  ;; mu4e only loads notifications.el if dbus is already loaded, which
+  ;; Emacs 31 no longer does eagerly at startup.
+  (require 'notifications)
 
   ;; Mail retrieval is owned by the systemd mbsync/imapnotify services.  Keep
   ;; mu4e's own timer disabled so it cannot bypass their shared lock.
