@@ -90,3 +90,5 @@
 (package! mu4e :built-in t)
 (package! nano-mu4e
   :recipe (:host github :repo "rougier/nano-mu4e"))
+
+(package! elfeed-protocol)

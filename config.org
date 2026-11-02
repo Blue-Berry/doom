@@ -772,6 +772,39 @@ wrappers disable that check.
         :i "S-RET" #'+wasabi/chat-newline))
 #+end_src
 
+* RSS
+Miniflux manages subscriptions at https://yggdra-rss.duckdns.org. Enable Fever
+under Settings → Integrations, then add its credentials to =~/.authinfo.gpg=
+(or =~/.authinfo=):
+
+#+begin_example
+machine yggdra-rss.duckdns.org port 443 login FEVER_USERNAME password FEVER_PASSWORD
+#+end_example
+
+Open the reader with ~M-x =rss~ and update with =gR=. The =S= key changes the
+search filter; =+unread= shows unread articles and =+star= shows saved articles.
+
+#+begin_src emacs-lisp
+(use-package! elfeed-protocol
+  :after elfeed
+  :config
+  (require 'auth-source)
+  (setq elfeed-feeds
+        '(("fever+https://admin@yggdra-rss.duckdns.org"
+           :api-url "https://yggdra-rss.duckdns.org/fever/"
+           :password
+           (lambda ()
+             (let ((auth-sources '("~/.authinfo" "~/.authinfo.gpg")))
+               (or (auth-source-pick-first-password
+                    :host "yggdra-rss.duckdns.org" :port 443 :user "admin")
+                   (user-error "Miniflux Fever password missing from authinfo")))))))
+  (setq elfeed-use-curl t
+        elfeed-search-filter "+unread"
+        elfeed-protocol-enabled-protocols '(fever)
+        elfeed-protocol-fever-fetch-category-as-tag t)
+  (elfeed-protocol-enable))
+#+end_src
+
 * Email
 ** mu4e + mbsync
 #+begin_src emacs-lisp :tangle yes
