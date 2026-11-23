@@ -92,3 +92,6 @@
   :recipe (:host github :repo "rougier/nano-mu4e"))
 
 (package! elfeed-protocol)
+
+(package! typst-ts-mode
+  :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))

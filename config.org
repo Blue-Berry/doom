@@ -526,6 +526,31 @@ nixd isn't in the ~lsp-client-packages~ list so it is ignored, this is set to ni
 #+begin_src emacs-lisp :tangle yes
 (add-hook 'janet-ts-mode-hook #'parinfer-rust-mode)
 #+end_src
+*** Typst
+**** Tree-sitter
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'treesit-language-source-alist
+             `(typst . ("https://github.com/uben0/tree-sitter-typst"
+                        ,@(when (eq 'windows-nt system-type)
+                            '(nil nil "gcc.exe")))))
+
+(unless (treesit-language-available-p 'typst)
+  (treesit-install-language-grammar 'typst))
+#+end_src
+**** Mode
+#+begin_src emacs-lisp :tangle yes
+(use-package! typst-ts-mode
+  :mode "\\.typ\\'")
+#+end_src
+**** LSP
+#+begin_src emacs-lisp :tangle yes
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(typst-ts-mode . ("tinymist"))))
+
+(add-hook 'typst-ts-mode-hook
+          (lambda () (when (executable-find "tinymist") (lsp!))))
+#+end_src
 *** Go
 **** TODO verify the inlay hints
 maybe this is needed
